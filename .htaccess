@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteBase /
+RewriteCond %{THE_REQUEST} \ /index\.php(?:\?|\s|$) [NC]
+RewriteRule ^ / [L,R=301]

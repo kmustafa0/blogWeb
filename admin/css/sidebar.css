@@ -1,0 +1,29 @@
+.sidebar {
+  height: 100vh;
+  width: 250px;
+  /* veya 300px */
+  background-color: #f8f9fa;
+  padding: 20px;
+  margin-right: 20%;
+}
+
+.sidebar ul.nav li.nav-item a.nav-link {
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.65);
+  border-radius: 8px;
+  padding: 8px;
+  display: block;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar ul.nav li.nav-item a.nav-link:hover {
+  background-color: #d2f4ea;
+}
+
+.sidebar ul.nav li.nav-item a.nav-link.active,
+.sidebar ul.nav li.nav-item a.nav-link.active:hover {
+  background-color: #d2f4ea;
+}
+.nav-link-quit:hover {
+  color: red;
+}
