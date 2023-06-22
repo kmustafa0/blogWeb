@@ -1,3 +1,3 @@
 # Blog sitem. Geliştirmeye devam ediyorum
 
-## [Siteye buradan gidebilirsiniz](https://blog.mustafakole.dev){:target="_blank"}
+## [Siteye buradan gidebilirsiniz](https://blog.mustafakole.dev)
