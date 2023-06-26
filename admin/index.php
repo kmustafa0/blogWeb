@@ -21,34 +21,7 @@ if (!isset($_SESSION["user"])) {
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-2">
-                <div class="sidebar">
-                    <!-- Sidebar içeriği -->
-                    <h1>MK | Blog</h1>
-                    <h6 class="text-black-50"><?php if (array_key_exists('user', $_SESSION)) {
-                                                echo "giriş yapan: ",$_SESSION['user'];
-                                            } else {
-                                                echo "";
-                                            }?></h6>
-                    <ul class="nav flex-column gap-2">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="index.php">Gönderi Paylaş</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="posts.php">Gönderiler</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="comments.php">Yorumlar</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="users.php">Kullanıcılar</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-2" style="position: fixed; bottom: 20px;">
-                <a class="nav-link nav-link-quit" href="logout.php">Çıkış Yap</a>
-            </div>
+            <?php require_once "sidebar.php"; ?>
             <div class="col">
                 <div class="content">
                     <div class="container px-10 px-lg-10">

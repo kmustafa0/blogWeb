@@ -22,44 +22,21 @@ if (!isset($_SESSION["user"])) {
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-2">
-                <div class="sidebar">
-                    <!-- Sidebar içeriği -->
-                    <h1>MustafaK</h1>
-                    <h6 class="text-black-50"><?php if (array_key_exists('user', $_SESSION)) {
-                                                echo "giriş yapan: ", $_SESSION['user'];
-                                            } else {
-                                                echo "";
-                                            } ?></h6>
-                    <ul class="nav flex-column gap-2">
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.php">Gönderi Paylaş</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="posts.php">Gönderiler</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="comments.php">Yorumlar</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="users.php">Kullanıcılar</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-2" style="position: fixed; bottom: 20px;">
-                <a class="nav-link nav-link-quit" href="logout.php">Çıkış Yap</a>
-            </div>
+            <?php require_once "sidebar.php"; ?>
             <div class="col">
                 <center>
                     <?php
-                                    if (isset($_GET["silid"])) {
-                                        $sil = mysqli_query($conn, "DELETE FROM posts WHERE post_id = '" . $_GET["silid"] . "'");
-                                        echo '<div class="alert alert-success mt-4">Başarıyla Silindi.</div>';
-                                        header("Refresh: 1; url=posts.php");
-                                    }
-                                    ?>
+                        if (isset($_GET["silid"])) {
+                            $sil = mysqli_query($conn, "DELETE FROM posts WHERE post_id = '" . $_GET["silid"] . "'");
+                            echo '<div class="alert alert-success mt-4">Başarıyla Silindi.</div>';
+                            header("Refresh: 1; url=posts.php");
+                        }
+                        ?>
                     <h4 class="mt-5">İçerikler</h4><br />
+                    <div class="mb-3">
+                        <input type="text" id="search" class="form-control" style="width: 300px;"
+                            placeholder="Arama yapın...">
+                    </div>
                     <table class="table">
                         <thead>
                             <tr>
@@ -71,13 +48,13 @@ if (!isset($_SESSION["user"])) {
                         </thead>
                         <tbody>
                             <?php
-                                            $veri = mysqli_query($conn, "SELECT * FROM posts ORDER BY post_id DESC");
-                                            while ($content = $veri->fetch_array()) {
-                                                $postTitle = substr($content["post_title"], 0, 50);
-                                                $postContent = substr($content["post_content"], 0, 50);
-                                                $postAuthor = $content["author"];
-                                                $postId = $content["post_id"];
-                                            ?>
+                                $veri = mysqli_query($conn, "SELECT * FROM posts ORDER BY post_id DESC");
+                                while ($content = $veri->fetch_array()) {
+                                    $postTitle = substr($content["post_title"], 0, 50) . "...";
+                                    $postContent = substr($content["post_content"], 0, 50) . "...";
+                                    $postAuthor = $content["author"];
+                                    $postId = $content["post_id"];
+                                ?>
                             <tr>
                                 <td><?php echo $postTitle; ?></td>
                                 <td><?php echo $postContent; ?></td>
@@ -104,6 +81,25 @@ if (!isset($_SESSION["user"])) {
                     link.classList.add("active");
                 }
             });
+        });
+    });
+    </script>
+    <script>
+    document.getElementById('search').addEventListener('keyup', function(event) {
+        const searchValue = event.target.value.toLowerCase();
+        const tableRows = document.querySelectorAll('tbody tr');
+
+        tableRows.forEach(function(row) {
+            const title = row.cells[0].innerText.toLowerCase();
+            const content = row.cells[1].innerText.toLowerCase();
+            const author = row.cells[2].innerText.toLowerCase();
+
+            if (title.includes(searchValue) || content.includes(searchValue) || author.includes(
+                    searchValue)) {
+                row.style.display = 'table-row';
+            } else {
+                row.style.display = 'none';
+            }
         });
     });
     </script>

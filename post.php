@@ -1,7 +1,27 @@
-<?php
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>MK | Blog</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet"
+        type="text/css" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+        rel="stylesheet" type="text/css" />
+    <link href="/blogWeb/css/styles.css" rel="stylesheet" />
+</head>
+
+<body>
+    <?php require_once 'nav.php' ?>
+    <?php
 
 include "config.php";
-session_start();
 if (isset($_GET["postid"])) {
 
     $icerlk = mysqli_query($conn, "select * from posts where post_id = '" . $_GET["postid"] . "'");
@@ -29,61 +49,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sql = "INSERT INTO comments (post_id, user_id, email, username, comment, created_at) 
           VALUES ('$post_id', '$user_id', '$email', '$username', '$comment', NOW())";
     if ($conn->query($sql) === TRUE) {
-        header("Location: post.php?postid=" . $post_id);
+        header("Location: /blogWeb/post/" . $post_id);
     } else {
         echo "Yorum kaydedilirken hata oluştu: " . $conn->error;
     }
 }
-
-
-
 ?>
-
-<!DOCTYPE html>
-<html lang="tr">
-
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>MK | Blog</title>
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet"
-        type="text/css" />
-    <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
-        rel="stylesheet" type="text/css" />
-    <link href="css/styles.css" rel="stylesheet" />
-</head>
-
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
-        <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="index.php">Mustafa.Blog</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                MENÜ
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="index.php">ANA SAYFA</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="about.php">Hakkımda</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact.php">İletişim</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-                            href="./loginAndReg/login.php"><?php if (array_key_exists('name', $_SESSION)) {
-                                                                                                                        echo $_SESSION['name'];
-                                                                                                                    } else {
-                                                                                                                        echo 'Misafir';
-                                                                                                                    } ?> </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <header class="masthead" style="background-image: url('assets/img/post-bg.jpg')">
+    <header class="masthead" style="background-image: url('/blogWeb/assets/img/post-bg.jpg')">
         <div class="container position-relative px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">

@@ -1,10 +1,12 @@
 <?php
+use Dotenv\Dotenv;
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPmailer\Exception;
+use PHPMailer\PHPMailer\Exception;
+
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 require 'phpmailer/src/Exception.php';
@@ -37,7 +39,7 @@ if (isset($_POST["send"])) {
     echo "
     <script>
         alert('Sent Successfully');
-        document.location.href = 'index.php'
+        document.location.href = '/'
     </script>
     ";
 }

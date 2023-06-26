@@ -24,39 +24,16 @@ if (!isset($_SESSION["user"])) {
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-2">
-                <div class="sidebar">
-                    <!-- Sidebar içeriği -->
-                    <h1>MustafaK</h1>
-                    <h6 class="text-black-50"><?php if (array_key_exists('user', $_SESSION)) {
-                                                echo "giriş yapan: ",$_SESSION['user'];
-                                            } else {
-                                                echo "";
-                                            }?></h6>
-                    <ul class="nav flex-column gap-2">
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.php">Gönderi Paylaş</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="posts.php">Gönderiler</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="comments.php">Yorumlar</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="users.php">Kullanıcılar</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-2" style="position: fixed; bottom: 20px;">
-                <a class="nav-link nav-link-quit" href="logout.php">Çıkış Yap</a>
-            </div>
+            <?php require_once "sidebar.php"; ?>
             <div class="col">
                 <div class="content">
                     <div class="container">
                         <center>
                             <h4 class="mt-5 mb-4">Kullanıcılar</h4>
+                            <div class="mb-3">
+                                <input type="text" id="search" class="form-control" style="width: 300px;"
+                                    placeholder="Arama yapın...">
+                            </div>
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -73,28 +50,28 @@ if (!isset($_SESSION["user"])) {
                                 </thead>
                                 <tbody>
                                     <?php
-                                $sql = "SELECT * FROM users";
-                                $result = $conn->query($sql);
+                                        $sql = "SELECT * FROM users";
+                                        $result = $conn->query($sql);
 
-                                if ($result->num_rows > 0) {
-                                    while ($row = $result->fetch_assoc()) {
-                                        echo "<tr>";
-                                        echo "<td>" . $row["id"] . "</td>";
-                                        echo "<td>" . $row["name"] . "</td>";
-                                        echo "<td>" . $row["lastname"] . "</td>";
-                                        echo "<td>" . $row["phone"] . "</td>";
-                                        echo "<td>" . $row["email"] . "</td>";
-                                        echo "<td>" . $row["user_type"] . "</td>";
-                                        echo "<td>" . $row["username"] . "</td>";
-                                        echo "<td>" . $row["password"] . "</td>";
-                                        echo "<td><a href='#' class='edit-btn bg-gray' data-user-id='" . $row["id"] . "' data-bs-toggle='modal' data-bs-target='#editModal'>Düzenle</a></td>";
-                                        echo "<td><a href='#' class='delete-user bg-gray' data-id='" . $row["id"] . "'>Sil</a></td>";
-                                        echo "</tr>";
-                                    }
-                                } else {
-                                    echo "<tr><td colspan='9'>Kullanıcı bulunamadı.</td></tr>";
-                                }
-                                ?>
+                                        if ($result->num_rows > 0) {
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo "<tr>";
+                                                echo "<td>" . $row["id"] . "</td>";
+                                                echo "<td>" . $row["name"] . "</td>";
+                                                echo "<td>" . $row["lastname"] . "</td>";
+                                                echo "<td>" . $row["phone"] . "</td>";
+                                                echo "<td>" . $row["email"] . "</td>";
+                                                echo "<td>" . $row["user_type"] . "</td>";
+                                                echo "<td>" . $row["username"] . "</td>";
+                                                echo "<td>" . $row["password"] . "</td>";
+                                                echo "<td><a href='#' class='edit-btn bg-gray' data-user-id='" . $row["id"] . "' data-bs-toggle='modal' data-bs-target='#editModal'>Düzenle</a></td>";
+                                                echo "<td><a href='#' class='delete-user bg-gray' data-id='" . $row["id"] . "'>Sil</a></td>";
+                                                echo "</tr>";
+                                            }
+                                        } else {
+                                            echo "<tr><td colspan='9'>Kullanıcı bulunamadı.</td></tr>";
+                                        }
+                                        ?>
                                 </tbody>
                             </table>
                         </center>
@@ -224,6 +201,26 @@ if (!isset($_SESSION["user"])) {
                 }
             });
         }
+    });
+    </script>
+    <script>
+    document.getElementById('search').addEventListener('keyup', function(event) {
+        const searchValue = event.target.value.toLowerCase();
+        const tableRows = document.querySelectorAll('tbody tr');
+
+        tableRows.forEach(function(row) {
+            const name = row.cells[1].innerText.toLowerCase();
+            const lastname = row.cells[2].innerText.toLowerCase();
+            const phone = row.cells[3].innerText.toLowerCase();
+            const username = row.cells[6].innerText.toLowerCase();
+
+            if (name.includes(searchValue) || lastname.includes(searchValue) || phone.includes(
+                    searchValue) || username.includes(searchValue)) {
+                row.style.display = 'table-row';
+            } else {
+                row.style.display = 'none';
+            }
+        });
     });
     </script>
 </body>

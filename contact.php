@@ -15,38 +15,37 @@
         href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
         rel="stylesheet" type="text/css" />
     <link href="css/styles.css" rel="stylesheet" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
-        <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="index.php">Mustafa.Blog</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                MENÜ
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="index.php">ANA SAYFA</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="about.php">Hakkımda</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact.php">İletişim</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <header class="masthead" style="background-image: url('assets/img/contact-bg.jpg')">
-        <div class="container position-relative px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
-                    <div class="page-heading">
-                        <h1>BANA ULAŞ</h1>
-                        <span class="subheading">Yaşadığın bir sorun hakkında bana ulaşabilirsin.</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+    <?php require_once 'nav.php' ?>
+    <?php require_once 'header.php' ?>
+    <?php
+        require_once 'config.php';
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $email = $_POST['email'];
+            $subject = $_POST['subject'];
+            $message = $_POST['message'];
+            $created_at = date('Y-m-d H:i:s');
+
+            $sql = "INSERT INTO messages (email, subject, message, created_at) VALUES (?, ?, ?, ?)";
+            
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ssss", $email, $subject, $message, $created_at);
+
+            if ($stmt->execute()) {
+                $successMessage = "Mesajınız başarılı bir şekilde gönderildi.";
+                $_POST = array();
+            } else {
+                $errorMessage = "Mesaj gönderilirken bir hata oluştu: " . $stmt->error;
+            }
+
+            $stmt->close();
+        }
+    ?>
+
     <main class="mb-4">
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -54,7 +53,9 @@
                     <p>İletişime geçmek ister misiniz? Bana mesaj göndermek için aşağıdaki formu doldurun, en kısa
                         sürede size geri döneceğim!</p>
                     <div class="my-5">
-                        <form id="contactForm" action="send.php" method="post">
+                        <div id="successMessage" class="alert alert-success" role="alert" style="display: none;"></div>
+                        <div id="errorMessage" class="alert alert-danger" role="alert" style="display: none;"></div>
+                        <form id="contactForm" method="post">
                             <div class="form-floating">
                                 <input class="form-control" id="email" type="email" name="email" placeholder="a"
                                     required />
@@ -109,7 +110,8 @@
                             </a>
                         </li>
                     </ul>
-                    <div class="small text-center text-muted fst-italic">Copyright &copy; Mustafa 2022</div>
+                    <div class="small text-center text-muted fst-italic">Copyright &copy;
+                        Mustafa 2022</div>
                 </div>
             </div>
         </div>
@@ -118,6 +120,34 @@
     <script src="js/scripts.js"></script>
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    <script>
+    // Otomatik mesaj kapatma fonksiyonu
+    function hideMessage() {
+        var successMessage = document.getElementById('successMessage');
+        var errorMessage = document.getElementById('errorMessage');
+
+        if (successMessage) {
+            successMessage.style.display = 'none';
+        }
+
+        if (errorMessage) {
+            errorMessage.style.display = 'none';
+        }
+    }
+
+    // Başarılı veya hatalı mesajları görüntüleme
+    <?php if (isset($successMessage)): ?>
+    document.getElementById('successMessage').innerHTML = '<?php echo $successMessage; ?>';
+    document.getElementById('successMessage').style.display = 'block';
+    setTimeout(hideMessage, 1000);
+    <?php endif; ?>
+
+    <?php if (isset($errorMessage)): ?>
+    document.getElementById('errorMessage').innerHTML = '<?php echo $errorMessage; ?>';
+    document.getElementById('errorMessage').style.display = 'block';
+    setTimeout(hideMessage, 1000);
+    <?php endif; ?>
+    </script>
 </body>
 
 </html>

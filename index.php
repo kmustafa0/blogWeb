@@ -23,56 +23,8 @@ include "config.php";
 </head>
 
 <body>
-    <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
-        <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="index.php">Mustafa.Blog</a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="index.php">ANA SAYFA</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="about.php">Hakkımda</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact.php">İletişim</a></li>
-                    <li class="nav-item">
-                        <?php
-                        session_start();
-
-                        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
-                            echo '<a href="./loginAndReg/logout.php" class="nav-link px-lg-3 py-3 py-lg-4">Çıkış
-                            yap</a>';
-                        } else {
-                            echo '<a class="nav-link px-lg-3 py-3 py-lg-4" href="./loginAndReg/login.php">Giriş
-                            Yap</a>';
-                        }
-                        ?>
-
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <!-- Page Header-->
-    <header class="masthead" style="background-image: url('assets/img/home-bg.jpg')">
-        <div class="container position-relative px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
-                    <div class="site-heading">
-                        <h1>Mustafa.Blog</h1>
-                        <span class="subheading">Full-Stack Developer</span>
-                        <h4>Merhaba <span><?php if (array_key_exists('name', $_SESSION)) {
-                                                echo ucfirst($_SESSION['name']);
-                                            } else {
-                                                echo "Misafir";
-                                            } ?></span></h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+    <?php require_once 'nav.php' ?>
+    <?php require_once 'header.php' ?>
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
@@ -89,7 +41,7 @@ include "config.php";
                     ?>
 
                 <div class="post-preview">
-                    <a href="post.php?postid=<?php echo $icerik["post_id"]; ?>">
+                    <a href="post/<?php echo $icerik["post_id"]; ?>">
                         <h2 class="post-title"><?php echo $title; ?></h2>
                         <h3 class="post-subtitle"><?php echo substr($icerik["post_content"], 0, 155), "...";  ?></h3>
                     </a>
