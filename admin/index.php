@@ -29,7 +29,7 @@ if (!isset($_SESSION["user"])) {
                             <div class="col-md-15 col-lg-8 col-xl-7">
                                 <center>
                                     <form method="POST">
-                                        <h4 class="mt-5">İçerik Paylaş</h4>
+                                        <h4 class="mt-5 fs-1 fw-light">İçerik Paylaş</h4>
                                         <br />
                                         <!-- Title input -->
                                         <div class="form-outline mb-6">
@@ -46,12 +46,11 @@ if (!isset($_SESSION["user"])) {
                                         <!-- Content input -->
                                         <div class="form-outline mb-6">
                                             <textarea class="form-control" id="form4Example3" placeholder="İçerik"
-                                                name="content"
-                                                rows="10"><?php
-                                                                                                                                                if (isset($_POST["content"])) {
-                                                                                                                                                    echo $_POST["content"];
-                                                                                                                                                }
-                                                                                                                                                ?></textarea>
+                                                name="content" rows="10"><?php
+                                                            if (isset($_POST["content"])) {
+                                                                echo $_POST["content"];
+                                                            }
+                                                            ?></textarea>
                                         </div>
                                         <br />
                                         <?php
@@ -64,7 +63,7 @@ if (!isset($_SESSION["user"])) {
                                                     $ekle = mysqli_query($conn, "INSERT INTO posts (author ,post_title, post_content) VALUES ('" . mysqli_real_escape_string($conn, $username) . "', '" . mysqli_real_escape_string($conn, $title) . "','" . mysqli_real_escape_string($conn, $content) . "')");
 
                                                     echo '<div class="alert alert-success">Başarıyla eklendi</div>';
-                                                    header("Refresh: 1; url=index.php");
+                                                    header("Refresh: 0.5; url=index");
                                                 } else {
                                                     echo '<div class="alert alert-danger">Boş alan bırakmayınız!</div>';
                                                 }
@@ -73,7 +72,7 @@ if (!isset($_SESSION["user"])) {
                                             ?>
                                         <!-- Submit button -->
                                         <button type="submit" name="sendPost"
-                                            class="btn btn-primary btn-block mb-4">Paylaş</button>
+                                            class="btn btn-outline-primary rounded btn-block mb-4">Paylaş</button>
                                     </form>
                                 </center><br />
 

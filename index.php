@@ -4,7 +4,7 @@ include "config.php";
 /* session_start() */
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 
 <head>
     <meta charset="utf-8" />
@@ -13,7 +13,7 @@ include "config.php";
     <meta name="author" content="" />
     <title>MK | Blog</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+
     <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet"
         type="text/css" />
     <link
@@ -23,78 +23,21 @@ include "config.php";
 </head>
 
 <body>
+
     <?php require_once 'nav.php' ?>
     <?php require_once 'header.php' ?>
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-md-10 col-lg-8 col-xl-7">
-                <?php
-                $content = mysqli_query($conn, "SELECT * FROM posts ORDER BY post_id DESC");
-
-                while ($icerik = $content->fetch_array()) {
-                    $title = $icerik["post_title"];
-                    $postDate = date("d-m-Y", strtotime($icerik["created_at"]));
-
-                    $authorQuery = mysqli_query($conn, "SELECT author FROM posts WHERE post_id = ".$icerik["post_id"]);
-                    $authorResult = mysqli_fetch_assoc($authorQuery);
-                    $author = $authorResult['author'];
-                    ?>
-
-                <div class="post-preview">
-                    <a href="post/<?php echo $icerik["post_id"]; ?>">
-                        <h2 class="post-title"><?php echo $title; ?></h2>
-                        <h3 class="post-subtitle"><?php echo substr($icerik["post_content"], 0, 155), "...";  ?></h3>
-                    </a>
-                    <p class="post-meta">
-                        Paylaşan
-                        <a href="#!">@<?php echo $author; ?></a>
-                        <?php echo $postDate; ?>
-                    </p>
-                </div>
-                <hr class="my-4" />
-
-                <?php } ?>
+            <div class="col-md-10 col-lg-8 col-xl-7 posts">
+                <div class="post-preview"></div>
             </div>
         </div>
     </div>
-    <!-- Footer-->
-    <footer class="border-top">
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
-                    <ul class="list-inline text-center">
-                        <li class="list-inline-item">
-                            <a href="https://twitter.com/mustafakole0">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fas fa-circle fa-stack-2x"></i>
-                                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="https://instagram.com/mmustafakole">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fas fa-circle fa-stack-2x"></i>
-                                    <i class="fa-brands fa-instagram fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="https://github.com/kmustafa0">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fas fa-circle fa-stack-2x"></i>
-                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="small text-center text-muted fst-italic">Copyright &copy; Mustafa 2022</div>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <?php require_once'footer.php' ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
+    <script src="js/infiniteScroll.js"></script>
 </body>
 
 </html>

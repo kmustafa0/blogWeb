@@ -22,10 +22,10 @@ if (isset($_POST["loginPost"])) {
         $_SESSION['name'] = $user['name'];
         $_SESSION['user'] = $username;
         $_SESSION['loggedin'] = true;
-        header("Refresh: 1.5; url=index.php");
+        header("Refresh: 1.5; url=index");
         exit();
     } else {
-        header("Location: login.php");
+        header("Location: login");
         exit();
     }
 }
@@ -65,7 +65,7 @@ if (isset($_POST["loginPost"])) {
             <input type="password" name="password" id="myPassword" required placeholder="şifreni yaz">
             <input type="checkbox" onclick="showPass()"> Şifreyi Göster
             <input type="submit" name="loginPost" value="giris yap" class="form-btn">
-            <p><a href="../index.php">siteye git</a></p>
+            <p><a href="../">siteye git</a></p>
         </form>
     </div>
 

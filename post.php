@@ -21,40 +21,40 @@
     <?php require_once 'nav.php' ?>
     <?php
 
-include "config.php";
-if (isset($_GET["postid"])) {
+    include "config.php";
+    if (isset($_GET["postid"])) {
 
-    $icerlk = mysqli_query($conn, "select * from posts where post_id = '" . $_GET["postid"] . "'");
-    $icerik = mysqli_fetch_array($icerlk);
+        $icerlk = mysqli_query($conn, "select * from posts where post_id = '" . $_GET["postid"] . "'");
+        $icerik = mysqli_fetch_array($icerlk);
 
-    $title = $icerik["post_title"];
-    $newTitle = ucwords(strtolower($title));
-    $content = $icerik["post_content"];
-}
-if (array_key_exists('loggedin', $_SESSION)) {
-    $user_id = $_SESSION['id'];
-    $sql = "SELECT name, email FROM users WHERE id = $user_id";
-    $result = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_assoc($result);
-    $name = $row['name'];
-    $email = $row['email'];
-}
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    $comment = $_POST['comment'];
-    $post_id = $_GET['postid'];
-    $username = $_SESSION['username'];
-    $created_at = date('d-m-y h:i:s');
-
-    $sql = "INSERT INTO comments (post_id, user_id, email, username, comment, created_at) 
-          VALUES ('$post_id', '$user_id', '$email', '$username', '$comment', NOW())";
-    if ($conn->query($sql) === TRUE) {
-        header("Location: /blogWeb/post/" . $post_id);
-    } else {
-        echo "Yorum kaydedilirken hata oluştu: " . $conn->error;
+        $title = $icerik["post_title"];
+        $newTitle = ucwords(strtolower($title));
+        $content = $icerik["post_content"];
     }
-}
-?>
+    if (array_key_exists('loggedin', $_SESSION)) {
+        $user_id = $_SESSION['id'];
+        $sql = "SELECT name, email FROM users WHERE id = $user_id";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+        $name = $row['name'];
+        $email = $row['email'];
+    }
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+        $comment = $_POST['comment'];
+        $post_id = $_GET['postid'];
+        $username = $_SESSION['username'];
+        $created_at = date('d-m-y h:i:s');
+
+        $sql = "INSERT INTO comments (post_id, user_id, email, username, comment, created_at) 
+          VALUES ('$post_id', '$user_id', '$email', '$username', '$comment', NOW())";
+        if ($conn->query($sql) === TRUE) {
+            header("Location: /blogWeb/post/" . $post_id);
+        } else {
+            echo "Yorum kaydedilirken hata oluştu: " . $conn->error;
+        }
+    }
+    ?>
     <header class="masthead" style="background-image: url('/blogWeb/assets/img/post-bg.jpg')">
         <div class="container position-relative px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -109,47 +109,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <label for="comment" class="form-label">Yorumunuz</label>
                         <textarea class="form-control" id="comment" name="comment" rows="5" required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Yorum Gönder</button>
+                    <button type="submit" class="btn btn-primary mb-4">Yorum Gönder</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <footer class="border-top">
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
-                    <ul class="list-inline text-center">
-                        <li class="list-inline-item">
-                            <a href="https://twitter.com/mustafakole0">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fas fa-circle fa-stack-2x"></i>
-                                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="https://instagram.com/mmustafakole">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fas fa-circle fa-stack-2x"></i>
-                                    <i class="fa-brands fa-instagram fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="https://github.com/kmustafa0">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fas fa-circle fa-stack-2x"></i>
-                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="small text-center text-muted fst-italic">Copyright &copy; Mustafa 2022</div>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <!-- Footer -->
+    <?php require_once 'footer.php' ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/scripts.js"></script>
 </body>

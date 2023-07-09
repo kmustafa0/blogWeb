@@ -8,6 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql = "DELETE FROM users WHERE id = $userId";
         if ($conn->query($sql) === TRUE) {
             echo "success";
+            header("Refresh:0");
         } else {
             echo "error";
         }

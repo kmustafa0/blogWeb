@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
             '$pass'
         )";
          mysqli_query($conn, $insert);
-         header('location:login.php');
+         header('location:login');
       }
    }
 };
@@ -84,7 +84,7 @@ if (isset($_POST['submit'])) {
             <input type="password" name="password" required placeholder="şifren">
             <input type="password" name="cpassword" required placeholder="şifreni onayla">
             <input type="submit" name="submit" value="kayıt ol" class="form-btn">
-            <p>kullanıcı hesabın var mı? <a href="login.php">giriş yap</a></p>
+            <p>kullanıcı hesabın var mı? <a href="login">giriş yap</a></p>
         </form>
 
     </div>

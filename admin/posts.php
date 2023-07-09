@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION["user"])) {
-    header("Location: login.php");
+    header("Location: login");
 } else {
     include "../config.php";
 ?>
@@ -29,17 +29,17 @@ if (!isset($_SESSION["user"])) {
                         if (isset($_GET["silid"])) {
                             $sil = mysqli_query($conn, "DELETE FROM posts WHERE post_id = '" . $_GET["silid"] . "'");
                             echo '<div class="alert alert-success mt-4">Başarıyla Silindi.</div>';
-                            header("Refresh: 1; url=posts.php");
+                            header("Refresh: 1; url=posts");
                         }
                         ?>
-                    <h4 class="mt-5">İçerikler</h4><br />
+                    <h4 class="mt-5 fs-1 fw-light">İçerikler</h4><br />
                     <div class="mb-3">
                         <input type="text" id="search" class="form-control" style="width: 300px;"
                             placeholder="Arama yapın...">
                     </div>
                     <table class="table">
                         <thead>
-                            <tr>
+                            <tr class="text-center font-monospace">
                                 <th scope="col">Başlık</th>
                                 <th scope="col">İçerik</th>
                                 <th scope="col">Yazar</th>
@@ -55,13 +55,13 @@ if (!isset($_SESSION["user"])) {
                                     $postAuthor = $content["author"];
                                     $postId = $content["post_id"];
                                 ?>
-                            <tr>
+                            <tr class='text-center fw-lighter'>
                                 <td><?php echo $postTitle; ?></td>
                                 <td><?php echo $postContent; ?></td>
                                 <td><?php echo $postAuthor; ?></td>
                                 <td>
-                                    <a href="?silid=<?php echo $postId; ?>">Sil</a>
-                                    <a href="edit.php?duzid=<?php echo $postId; ?>">Düzenle</a>
+                                    <a href="edit.php?duzid=<?php echo $postId; ?>"
+                                        class="btn btn-outline-info rounded fw-bold">Düzenle</a>
                                 </td>
                             </tr>
                             <?php } ?>

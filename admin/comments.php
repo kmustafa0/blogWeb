@@ -27,7 +27,7 @@ if (!isset($_SESSION["user"])) {
             <?php require_once "sidebar.php"; ?>
             <div class="col">
                 <center>
-                    <h4 class="mt-5 mb-3">Yorumlar</h4>
+                    <h4 class="mt-5 mb-3 fs-1 fw-light">Yorumlar</h4>
                     <div class="mb-3">
                         <input type="text" id="search" class="form-control" style="width: 300px;"
                             placeholder="Arama yapın...">
@@ -35,7 +35,7 @@ if (!isset($_SESSION["user"])) {
                     </div>
                     <table class="table">
                         <thead>
-                            <tr>
+                            <tr class="text-center font-monospace">
                                 <th>Yorum ID</th>
                                 <th>Gönderen</th>
                                 <th>Post</th>
@@ -55,7 +55,7 @@ if (!isset($_SESSION["user"])) {
                                         $sqlpost_title = "SELECT post_title from posts WHERE post_id = $postid";
                                         $result_post_title = $conn->query($sqlpost_title);
                                         $title = $result_post_title->fetch_assoc();
-                                        echo "<tr>";
+                                        echo "<tr class='text-center fw-lighter'>";
                                         echo "<td>" . $row["id"] . "</td>";
                                         echo "<td>" . $row["email"] . "</td>";
                                         echo "<td>" . substr($title["post_title"], 0, 20), "..." . "</td>";
@@ -63,7 +63,7 @@ if (!isset($_SESSION["user"])) {
                                         $commentDate = date("d-m-Y H:i", strtotime($row["created_at"]));
                                         echo "<td>" . $commentDate . "</td>";
                                         echo "<td>";
-                                        echo "<button type='button' class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#deleteModal" . $row["id"] . "'>Sil</button>";
+                                        echo "<button type='button' class='btn btn-outline-info rounded fw-bold' data-bs-toggle='modal' data-bs-target='#deleteModal" . $row["id"] . "'>Detaylar</button>";
                                         echo "</td>";
                                         echo "</tr>";
 
@@ -71,18 +71,18 @@ if (!isset($_SESSION["user"])) {
                                         echo "<div class='modal-dialog'>";
                                         echo "<div class='modal-content'>";
                                         echo "<div class='modal-header'>";
-                                        echo "<h5 class='modal-title' id='deleteModalLabel'>Yorum Sil</h5>";
+                                        echo "<h5 class='fs-3 fw-light' id='deleteModalLabel'>Yorum Detayları</h5>";
                                         echo "<button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>";
                                         echo "</div>";
                                         echo "<div class='modal-body'>";
-                                        echo "<p>Bu yorumu silmek istediğinize emin misiniz?</p>";
                                         echo "<strong>Gönderen:</strong> " . $row["email"] . "<br>";
-                                        echo "<strong>Gönderen:</strong> " . $title["post_title"] . "<br>";
-                                        echo "<strong>Yorum:</strong> " . $row["comment"];
+                                        echo "<strong>Post Başlığı:</strong> " . $title["post_title"] . "<br>";
+                                        echo "<strong>Yorum:</strong> " . $row["comment"] . "<br>";
+                                        echo "<strong>Yorum Tarihi:</strong> " . $commentDate;
                                         echo "</div>";
                                         echo "<div class='modal-footer'>";
-                                        echo "<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Hayır</button>";
-                                        echo "<a href='delete_comment.php?id=" . $row["id"] . "' class='btn btn-danger'>Evet, Sil</a>";
+                                        echo "<button type='button' class='btn btn-outline-dark rounded' data-bs-dismiss='modal'>Geri Dön</button>";
+                                        echo "<a href='delete_comment.php?id=" . $row["id"] . "' class='btn btn-outline-danger rounded'>Yorumu Sil</a>";
                                         echo "</div>";
                                         echo "</div>";
                                         echo "</div>";

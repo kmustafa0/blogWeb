@@ -1,10 +1,17 @@
 <?php
-function active($currect_page)
+/* function active($currect_page)
 {
     $url_array = explode('/', $_SERVER['REQUEST_URI']);
     $url = end($url_array);
     if ($currect_page == $url) {
-        echo 'active'; //class name in css
+        echo 'active';
+    }
+} */
+function active($currect_page)
+{
+    $url = $_SERVER['PHP_SELF'];
+    if (strpos($url, $currect_page) !== false) {
+        echo 'active';
     }
 }
 ?>
@@ -34,9 +41,12 @@ function active($currect_page)
             <li class="nav-item">
                 <a class="nav-link <?php active('messages'); ?> " href="messages">Mesajlar</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link <?php active('footer'); ?> " href="footer">Footer</a>
+            </li>
         </ul>
     </div>
 </div>
 <div class="col-md-2" style="position: fixed; bottom: 20px;">
-    <a class="nav-link nav-link-quit" href="logout">Çıkış Yap</a>
+    <a class="nav-link nav-link-quit text-danger" href="logout">Çıkış Yap</a>
 </div>
